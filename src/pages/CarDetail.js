@@ -5,14 +5,14 @@ import { loadTrim } from '../redux/slices/carSlice';
 import { Spinner, Alert } from 'react-bootstrap';
 
 const CarDetail = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const { trim, error, loading } = useSelector((state) => state.car);
+  const { id } = useParams();// Get the `id` from the URL (e.g., "honda_civic")
+  const dispatch = useDispatch();// Used to dispatch Redux actions
+  const { trim, error, loading } = useSelector((state) => state.car);// Select car data from Redux store
 
-  const [make, model] = id.split('_');
+  const [make, model] = id.split('_');// Split the ID into make and model (e.g., "honda", "civic")
 
   useEffect(() => {
-    dispatch(loadTrim({ make, model }));
+    dispatch(loadTrim({ make, model }));// Load car trim details when component mounts
   }, [make, model, dispatch]);
 
  const handleImgError = (e) => {
