@@ -31,7 +31,7 @@
 // export default carSlice.reducer;
 
 
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';// Importing necessary utilities from Redux Toolkit
 import axios from 'axios';
 
 // Async thunk to fetch cars
@@ -46,7 +46,7 @@ export const fetchCars = createAsyncThunk('car/fetchCars', async () => {
     }
   };
 
-  const response = await axios.request(options);
+  const response = await axios.request(options);  // Making the request and returning the response data
   return response.data;
 });
 
@@ -61,20 +61,20 @@ const carSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCars.pending, (state) => {
+      .addCase(fetchCars.pending, (state) => {     // When the fetchCars thunk is pending (i.e. loading)
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchCars.fulfilled, (state, action) => {
+      .addCase(fetchCars.fulfilled, (state, action) => {  // When the fetchCars thunk is fulfilled (i.e. successful)
         state.loading = false;
         state.cars = action.payload;
       })
-      .addCase(fetchCars.rejected, (state, action) => {
+      .addCase(fetchCars.rejected, (state, action) => {           // When the fetchCars thunk is rejected (i.e. failed)
         state.loading = false;
         state.error = action.error.message;
       });
   }
 });
-export const { getCars, loadTrim } = carSlice.actions;
+export const { getCars, loadTrim } = carSlice.actions;   // Exporting actions (although getCars and loadTrim aren't defined above, if added later)
 
 export default carSlice.reducer;
