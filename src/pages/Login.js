@@ -5,42 +5,47 @@ import { useDispatch } from 'react-redux';
 import { login } from '../redux/slices/authSlice';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+  const navigate = useNavigate();// Used for redirecting after successful login
+  const dispatch = useDispatch();// Dispatch Redux actions
+  
+// Form state for email and password
   const [form, setForm] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(''); // Error message state
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
-  const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email);
+  const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email);  // Function to validate Gmail addresses only
 
   const validatePassword = (password) =>
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/.test(password);
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/.test(password);  // Function to validate strong password
 
-  const handleChange = (e) => {
+  const handleChange = (e) => {    // Handle form input changes
     setForm({ ...form, [e.target.name]: e.target.value });
     setError('');
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = (e) => {     // Handle login form submission
+    e.preventDefault();// Prevent default form behavior
     const { email, password } = form;
 
+    // Check if all fields are filled
     if (!email || !password) {
       setError('Please fill all fields');
       return;
     }
 
+      // Validate email
     if (!validateEmail(email)) {
       setError('Please enter a valid Gmail address');
       return;
     }
 
+     // Validate password strength
     if (!validatePassword(password)) {
       setError('Password must meet the required criteria');
       return;
     }
 
+     // Retrieve users from localStorage and find matching credentials
     const users = JSON.parse(localStorage.getItem('users')) || [];
     const matchedUser = users.find(
       (user) => user.email === email && user.password === password
