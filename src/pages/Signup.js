@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
-  const [error, setError] = useState('');
+  const navigate = useNavigate();// Hook for programmatic navigation
+  const [form, setForm] = useState({ name: '', email: '', password: '' });// Form data state
+  const [error, setError] = useState('');// Error message state
 
+  // Handle form input changes
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Validate email - only allow Gmail addresses
   const validateEmail = (email) => {
     // Allow only Gmail
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
@@ -23,11 +25,12 @@ const Signup = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
     return passwordRegex.test(password);
   };
-
+ // Handle form submission for signup
   const handleSignup = (e) => {
     e.preventDefault();
     const { name, email, password } = form;
 
+    // Basic field validation
     if (!name || !email || !password) {
       setError('Please fill all fields');
       return;
@@ -49,7 +52,7 @@ const Signup = () => {
       );
       return;
     }
-
+ // Check if user already exists
     const users = JSON.parse(localStorage.getItem('users')) || [];
 
     if (users.find((user) => user.email === email)) {
