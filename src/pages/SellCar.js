@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Alert, Card } from 'react-bootstrap';
 
 const SellCar = () => {
+   // Form state to capture car input details
   const [formData, setFormData] = useState({
     name: '',
     brand: '',
@@ -10,9 +11,10 @@ const SellCar = () => {
     location: '',
     image: '',
   });
-
+ // State to manage submission success alert
   const [submitted, setSubmitted] = useState(false);
-  const [carList, setCarList] = useState([]);
+  const [carList, setCarList] = useState([]);  // List of all submitted cars (stored in localStorage)
+
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -27,6 +29,7 @@ const SellCar = () => {
     localStorage.setItem('submittedCars', JSON.stringify(carList));
   }, [carList]);
 
+    // Handle input changes and update form data state
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -35,9 +38,10 @@ const SellCar = () => {
     }));
   };
 
+    // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCarList((prev) => [...prev, formData]);
+    setCarList((prev) => [...prev, formData]);// Add current form data to car list
     setSubmitted(true);
     setFormData({
       name: '',
@@ -49,7 +53,7 @@ const SellCar = () => {
     });
     setTimeout(() => setSubmitted(false), 3000);
   };
-
+  // Handle deletion of a car listing
   const handleDelete = (index) => {
     const updatedList = carList.filter((_, i) => i !== index);
     setCarList(updatedList);
