@@ -167,22 +167,25 @@ const popularBrands = [
 ];
 
 const Home = () => {
+     // State to store fetched car data and filter options
   const [cars, setCars] = useState([]);
   const [carTypes, setCarTypes] = useState([]);
   const [carMakes, setCarMakes] = useState([]);
   const [carYears, setCarYears] = useState([]);
 
+    // State for selected filters
   const [selectedType, setSelectedType] = useState('');
   const [selectedMake, setSelectedMake] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
 
+      // State for loading, error, and pagination
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
 
-
+ // Fetch car list and filter options on initial render and page change
   useEffect(() => {
   fetchCarsFromAPI(currentPage);
   fetchCarTypesFromAPI();
@@ -191,7 +194,7 @@ const Home = () => {
 }, [currentPage]);
 
 
- 
+ // Fetch paginated car list
  const fetchCarsFromAPI = async (pageNumber = 0) => {
     setLoading(true);
     const options = {
@@ -221,7 +224,7 @@ const Home = () => {
         image: `https://source.unsplash.com/400x250/?${car.make}-${car.model}`,
       }));
 
-      setCars(formatted);
+      setCars(formatted);// Set fetched and formatted car data
     } catch (error) {
       console.error('API fetch error:', error);
       setApiError('Failed to fetch car data. Please try again later.');
@@ -231,7 +234,7 @@ const Home = () => {
   };
 
 
-
+// Fetch car types for filter dropdown
   const fetchCarTypesFromAPI = async () => {
     try {
       const options = {
@@ -248,7 +251,7 @@ const Home = () => {
       console.error('Error fetching car types:', error);
     }
   };
-
+ // Fetch car makes for filter dropdown
   const fetchCarMakesFromAPI = async () => {
     try {
       const options = {
@@ -265,7 +268,7 @@ const Home = () => {
       console.error('Error fetching car makes:', error);
     }
   };
-
+ // Fetch car years for filter dropdown
   const fetchCarYearsFromAPI = async () => {
     try {
       const options = {
@@ -282,7 +285,7 @@ const Home = () => {
       console.error('Error fetching car years:', error);
     }
   };
-
+// Filter cars based on selected type, make, and year
   const filteredCars = cars.filter((car) => {
     return (
       (!selectedType || car.name.toLowerCase().includes(selectedType.toLowerCase())) &&
