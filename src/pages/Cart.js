@@ -4,11 +4,11 @@ import { removeFromCart } from '../redux/cartSlice';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 
 const Cart = () => {
-  const { items } = useSelector(state => state.cart);
-  const dispatch = useDispatch();
+  const { items } = useSelector(state => state.cart); // Get the saved cars from Redux store
+  const dispatch = useDispatch();  // Used to dispatch actions (e.g., removeFromCart)
 
   return (
-    <Container className="my-5">
+    <Container className="my-5">  {/* Bootstrap container with vertical spacing */}
       <h2 className="mb-4">Your Saved Cars</h2>
       {items.length === 0 ? (
         <p>No cars saved.</p>
